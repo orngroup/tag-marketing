@@ -1,1 +1,785 @@
-index
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAG — Campaign Redesign Showcase v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,450&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#14273F; --navy-deep:#0B1A2C; --navy-soft:#1D3555;
+  --gold:#F0A81E; --gold-deep:#D8930F; --gold-soft:#FCEBC8;
+  --sand:#F5F1E9; --paper:#FFFFFF; --line:#E5DFD2;
+  --ink:#1B2B42; --slate:#4C5A6E; --mist:#8B96A5;
+  --display:'Fraunces', Georgia, 'Times New Roman', serif;
+  --body:'Public Sans', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--body);background:var(--sand);color:var(--ink);display:flex;overflow:hidden}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{width:308px;min-width:308px;background:linear-gradient(178deg,var(--navy) 0%,var(--navy-deep) 100%);color:#fff;display:flex;flex-direction:column;height:100vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--navy-soft) transparent}
+.sb-brand{padding:30px 26px 22px;border-bottom:1px solid rgba(255,255,255,.09)}
+.sb-brand .logo{width:128px;display:block;color:#fff}
+.sb-brand .tagline{margin-top:14px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.sb-brand .sub{margin-top:6px;font-size:12.5px;color:rgba(255,255,255,.55);line-height:1.5}
+.sb-group{padding:20px 16px 6px}
+.sb-group h3{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45);font-weight:700;padding:0 10px 10px}
+.nav-item{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;background:none;border:0;border-radius:10px;padding:11px 10px;cursor:pointer;color:rgba(255,255,255,.82);font-family:var(--body);transition:background .15s}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(240,168,30,.14)}
+.nav-item.active .ni-badge{background:var(--gold);color:var(--navy-deep)}
+.nav-item:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ni-badge{flex:none;width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;color:rgba(255,255,255,.85)}
+.ni-txt{display:block}
+.ni-title{display:block;font-size:13.5px;font-weight:600;line-height:1.35;color:rgba(255,255,255,.92)}
+.ni-sub{display:block;font-size:11.5px;color:rgba(255,255,255,.45);margin-top:2px;line-height:1.4}
+.journey .nav-item{position:relative}
+.journey .nav-item:not(:last-child)::after{content:"";position:absolute;left:26.5px;top:46px;bottom:-12px;width:1px;background:rgba(240,168,30,.35)}
+.sb-foot{margin-top:auto;padding:18px 26px 24px;font-size:11px;color:rgba(255,255,255,.35);line-height:1.6;border-top:1px solid rgba(255,255,255,.08)}
+.nav-item.util .ni-badge{background:var(--gold-soft);color:var(--navy-deep)}
+
+/* ---------- MAIN ---------- */
+.main{flex:1;height:100vh;overflow-y:auto;position:relative}
+.inbox-bar{position:sticky;top:0;z-index:5;background:rgba(245,241,233,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:16px 40px 14px}
+.inbox-bar .from{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mist);font-weight:700}
+.inbox-bar .subject{font-family:var(--display);font-size:21px;font-weight:600;color:var(--ink);margin-top:4px;line-height:1.25}
+.inbox-bar .preheader{font-size:13px;color:var(--slate);margin-top:3px}
+.canvas{max-width:720px;margin:34px auto 0;padding:0 24px}
+.email{background:var(--paper);border-radius:18px;overflow:hidden;box-shadow:0 22px 60px -24px rgba(11,26,44,.3), 0 2px 8px rgba(11,26,44,.06)}
+.notes{max-width:720px;margin:22px auto 60px;padding:0 24px}
+.notes details{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.notes summary{cursor:pointer;list-style:none;padding:14px 20px;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);display:flex;align-items:center;gap:10px}
+.notes summary::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.notes summary::-webkit-details-marker{display:none}
+.notes .nbody{padding:2px 22px 18px;font-size:13.5px;color:var(--slate);line-height:1.7}
+.notes .nbody p{margin-bottom:8px}
+
+/* ================= EMAIL DESIGN SYSTEM v2 ================= */
+.em-head{background:var(--navy-deep);padding:24px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--gold)}
+.em-head .logo{width:100px;color:#fff}
+.em-head .mte{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:700;text-align:right;line-height:1.7}
+
+/* hero with photo slot + navy overlay */
+.hero{position:relative;color:#fff;overflow:hidden;min-height:400px;display:flex;align-items:flex-end}
+.hero .overlay{position:absolute;inset:0;background:linear-gradient(178deg,rgba(11,26,44,.42) 0%,rgba(11,26,44,.62) 46%,rgba(11,26,44,.9) 100%)}
+.hero .content{position:relative;padding:110px 48px 46px;width:100%}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.26em;text-transform:uppercase;font-weight:800;color:var(--gold);margin-bottom:16px}
+.hero .eyebrow::before{content:"";width:22px;height:2px;background:var(--gold)}
+.hero h1{font-family:var(--display);font-weight:500;font-size:41px;line-height:1.1;letter-spacing:-.01em;max-width:500px}
+.hero h1 em{font-style:italic;font-weight:450;color:var(--gold)}
+.hero p{margin-top:16px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.88);max-width:460px}
+.hero .price{margin-top:22px;display:inline-flex;align-items:baseline;gap:8px;background:rgba(240,168,30,.16);border:1px solid rgba(240,168,30,.5);border-radius:999px;padding:8px 18px;font-size:13px;font-weight:700;backdrop-filter:blur(4px)}
+.hero .price strong{font-family:var(--display);font-size:19px;color:var(--gold)}
+/* dotted flight path signature */
+.flight{position:absolute;inset:0;pointer-events:none;opacity:.5}
+/* photo slot spec chips */
+.ph{position:relative}
+.ph .spec{position:absolute;top:12px;right:12px;z-index:3;display:inline-flex;align-items:center;gap:7px;background:rgba(11,26,44,.78);border:1px dashed rgba(255,255,255,.55);color:#fff;border-radius:8px;padding:6px 11px;font-size:10px;font-weight:700;letter-spacing:.06em;line-height:1.5;max-width:75%;backdrop-filter:blur(3px)}
+.ph .spec::before{content:"📷";font-size:12px}
+.ph .spec b{color:var(--gold);font-weight:800}
+
+.body-pad{padding:44px 48px}
+.body-pad.tight{padding-top:36px}
+.greet{font-size:15.5px;color:var(--slate);line-height:1.75}
+.greet .fname{color:var(--gold-deep);font-weight:700}
+.greet strong{color:var(--ink)}
+.sec-label{font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-weight:800;color:var(--gold-deep);margin:38px 0 8px;display:flex;align-items:center;gap:10px}
+.sec-label::after{content:"";flex:1;height:1px;background:var(--line)}
+.sec-title{font-family:var(--display);font-size:27px;font-weight:500;color:var(--navy);line-height:1.2;margin-bottom:10px}
+.sec-intro{font-size:14.5px;color:var(--slate);line-height:1.7;max-width:520px}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--body);font-size:14px;font-weight:700;text-decoration:none;border-radius:999px;padding:14px 28px;letter-spacing:.02em;transition:transform .12s,background .12s}
+.btn::after{content:"→";transition:transform .12s}
+.btn:hover{transform:translateY(-1px)}
+.btn:hover::after{transform:translateX(3px)}
+.btn-gold{background:var(--gold);color:var(--navy-deep)}
+.btn-gold:hover{background:var(--gold-deep)}
+.btn-ghost{border:1.5px solid var(--navy);color:var(--navy)}
+.center{text-align:center}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+.dcard{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;display:flex;flex-direction:column;transition:box-shadow .15s}
+.dcard:hover{box-shadow:0 10px 26px -12px rgba(11,26,44,.25)}
+.dcard .img{height:128px;display:flex;align-items:flex-end;padding:12px 14px;position:relative}
+.dcard .img .dn{position:relative;z-index:2;font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.dcard .img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,26,44,0) 40%,rgba(11,26,44,.55) 100%)}
+.dcard .txt{padding:16px 18px 18px;font-size:13px;line-height:1.65;color:var(--slate);flex:1}
+.dcard a{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:800;color:var(--gold-deep);text-decoration:none;letter-spacing:.04em}
+.dcard .spec{top:8px;right:8px;padding:4px 8px;font-size:9px}
+
+.pkg{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:22px;transition:box-shadow .15s}
+.pkg:hover{box-shadow:0 14px 34px -14px rgba(11,26,44,.28)}
+.pkg .img{height:180px;display:flex;align-items:flex-end;padding:16px 20px;position:relative}
+.pkg .img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,26,44,0) 45%,rgba(11,26,44,.5) 100%)}
+.pkg .img .tagchip{position:relative;z-index:2;background:rgba(11,26,44,.78);color:#fff;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;padding:6px 12px;border-radius:999px;backdrop-filter:blur(3px)}
+.pkg .inner{padding:22px 24px 24px}
+.pkg h3{font-family:var(--display);font-size:22px;font-weight:500;color:var(--navy)}
+.pkg .meta{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:6px;flex-wrap:wrap}
+.pkg .route{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--mist)}
+.pkg .pr{font-size:12px;color:var(--slate)}
+.pkg .pr strong{font-family:var(--display);font-size:23px;color:var(--gold-deep);font-weight:600}
+.pkg ul{margin:14px 0 4px;padding-left:0;list-style:none}
+.pkg li{font-size:13.5px;color:var(--slate);line-height:1.65;padding-left:20px;position:relative;margin-bottom:4px}
+.pkg li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.pkg .fine{font-size:11px;color:var(--mist);margin-top:10px}
+.pkg .btn{margin-top:16px}
+
+.feat{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+.feat:last-of-type{border-bottom:0}
+.feat .fic{flex:none;width:42px;height:42px;border-radius:12px;background:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-size:18px}
+.feat h4{font-size:15px;font-weight:700;color:var(--navy)}
+.feat p{font-size:13.5px;color:var(--slate);line-height:1.65;margin-top:3px}
+.strip{background:var(--sand);border-left:3px solid var(--gold);border-radius:0 14px 14px 0;padding:20px 24px;margin-top:30px}
+.strip p{font-size:13.5px;line-height:1.65;color:var(--slate)}
+.strip strong{color:var(--navy)}
+.session{display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-top:12px;flex-wrap:wrap;transition:border-color .15s}
+.session:hover{border-color:var(--gold)}
+.session .sn{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--gold-deep)}
+.session .st{font-size:14px;font-weight:600;color:var(--navy);margin-top:2px}
+.session .btn{padding:10px 22px;font-size:12.5px}
+.tier{counter-reset:tier;margin-top:24px}
+.tstep{display:flex;gap:18px;padding:18px 0;border-bottom:1px solid var(--line)}
+.tstep:last-child{border-bottom:0}
+.tstep::before{counter-increment:tier;content:counter(tier,decimal-leading-zero);font-family:var(--display);font-size:22px;font-weight:500;color:var(--gold);min-width:38px;line-height:1.2}
+.tstep h4{font-size:15px;font-weight:700;color:var(--navy)}
+.tstep p{font-size:13.5px;color:var(--slate);line-height:1.65;margin-top:3px}
+.tier-hero-stat{display:flex;gap:14px;margin-top:24px}
+.stat{flex:1;background:rgba(255,255,255,.09);border:1px solid rgba(240,168,30,.4);border-radius:14px;padding:16px 18px;text-align:center;backdrop-filter:blur(4px)}
+.stat b{display:block;font-family:var(--display);font-size:32px;font-weight:500;color:var(--gold)}
+.stat span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.8);font-weight:700}
+.toc{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+.toc a{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:13px;font-weight:600;color:var(--navy);text-decoration:none;transition:border-color .15s}
+.toc a:hover{border-color:var(--gold)}
+.toc a::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold);flex:none}
+.news-item{display:flex;gap:20px;padding:24px 0;border-bottom:1px solid var(--line)}
+.news-item:last-child{border-bottom:0}
+.news-item .thumb{flex:none;width:150px;height:104px;border-radius:12px;position:relative;overflow:hidden}
+.news-item .thumb .spec{top:6px;right:6px;left:6px;max-width:none;padding:4px 7px;font-size:8.5px}
+.news-item .k{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:var(--gold-deep)}
+.news-item h3{font-family:var(--display);font-size:19px;font-weight:500;color:var(--navy);margin-top:5px}
+.news-item p{font-size:13px;color:var(--slate);line-height:1.65;margin-top:6px}
+.news-item a{font-size:12.5px;font-weight:800;color:var(--gold-deep);text-decoration:none;display:inline-block;margin-top:8px}
+/* editor letter with headshot */
+.letter{display:flex;gap:20px;align-items:flex-start;margin-top:8px}
+.letter .hs{flex:none;width:86px;height:86px;border-radius:50%;position:relative;overflow:hidden;border:3px solid var(--gold-soft)}
+.letter .hs .spec{inset:auto;left:50%;top:50%;transform:translate(-50%,-50%);right:auto;padding:3px 6px;font-size:8px;max-width:92%}
+.letter .who{font-size:12px;color:var(--mist);margin-top:6px}
+.letter .who b{color:var(--navy)}
+/* speaker card */
+.speaker{display:flex;gap:18px;align-items:center;border:1px solid var(--line);border-radius:16px;padding:18px 22px;margin-top:26px}
+.speaker .hs{flex:none;width:74px;height:74px;border-radius:50%;position:relative;overflow:hidden;border:3px solid var(--gold-soft)}
+.speaker .hs .spec{inset:auto;left:50%;top:50%;transform:translate(-50%,-50%);right:auto;padding:3px 6px;font-size:8px;max-width:92%}
+.speaker h4{font-size:15px;font-weight:800;color:var(--navy)}
+.speaker p{font-size:12.5px;color:var(--slate);margin-top:2px}
+.sig{margin-top:36px;padding-top:24px;border-top:1px solid var(--line);font-size:14px;color:var(--slate);line-height:1.7}
+.sig strong{color:var(--navy)}
+.em-cta-band{position:relative;background:linear-gradient(160deg,var(--navy) 0%,var(--navy-deep) 100%);color:#fff;padding:40px 48px;text-align:center;overflow:hidden}
+.em-cta-band h3{font-family:var(--display);font-size:24px;font-weight:500;position:relative}
+.em-cta-band p{font-size:13.5px;color:rgba(255,255,255,.7);margin-top:8px;line-height:1.6;position:relative}
+.em-cta-band .btn{margin-top:20px;position:relative}
+.em-foot{background:var(--navy-deep);color:rgba(255,255,255,.5);padding:26px 48px 30px;font-size:11.5px;line-height:1.8;text-align:center}
+.em-foot .logo{width:82px;color:rgba(255,255,255,.85);margin:0 auto 12px;display:block}
+.em-foot a{color:rgba(255,255,255,.75);text-decoration:underline}
+.em-foot .links{margin-top:6px}
+
+/* destination gradient art (photo stand-ins) */
+.art-korea{background:linear-gradient(150deg,#274B73 0%,#5D86AC 45%,#C9DCE8 100%)}
+.art-korea2{background:linear-gradient(150deg,#1C3A5C 0%,#7A9BBB 60%,#E8EFF4 100%)}
+.art-koreahero{background:linear-gradient(160deg,#12283F 0%,#1F476B 55%,#5D86AC 100%)}
+.art-portugal{background:linear-gradient(150deg,#B9541F 0%,#E1913D 55%,#F4C86A 100%)}
+.art-portugal2{background:linear-gradient(150deg,#27455F 0%,#4E7A96 55%,#D8A24B 100%)}
+.art-porthero{background:linear-gradient(160deg,#20344B 0%,#6B4A28 60%,#C08434 100%)}
+.art-england{background:linear-gradient(150deg,#2E4A34 0%,#6C8A5E 55%,#CFC9A5 100%)}
+.art-england2{background:linear-gradient(150deg,#3B3F55 0%,#7A7E9C 55%,#D9C9A8 100%)}
+.art-enghero{background:linear-gradient(160deg,#182B41 0%,#27403A 60%,#5C7A50 100%)}
+.art-thaihero{background:linear-gradient(160deg,#122C38 0%,#154C44 55%,#2E8A6E 100%)}
+.art-nz{background:linear-gradient(150deg,#1F4E5F 0%,#3E8E7E 60%,#BFE3D2 100%)}
+.art-au{background:linear-gradient(150deg,#8A3B1E 0%,#C86A2E 60%,#F2C879 100%)}
+.art-sp{background:linear-gradient(150deg,#0E5F74 0%,#2FA3B5 60%,#C4ECEC 100%)}
+.art-af{background:linear-gradient(150deg,#5A3A1E 0%,#A9722F 60%,#E9C87F 100%)}
+.art-asia{background:linear-gradient(150deg,#5C1F33 0%,#A34A55 60%,#EFB98B 100%)}
+.art-eu{background:linear-gradient(150deg,#2F3D5E 0%,#5C6FA0 60%,#D6CBB0 100%)}
+.art-nurthero{background:linear-gradient(160deg,#14273F 0%,#1D3555 60%,#2B4A73 100%)}
+.art-hub{background:linear-gradient(160deg,#17304C 0%,#23456C 60%,#3E6390 100%)}
+.art-ui{background:linear-gradient(150deg,#22354E 0%,#3A557A 60%,#7E9BC0 100%)}
+.art-tier{background:linear-gradient(160deg,#1A2C44 0%,#3F3A2A 60%,#8A6A22 100%)}
+.art-newshero{background:linear-gradient(160deg,#0B1A2C 0%,#14273F 55%,#23456C 100%)}
+.art-neutral{background:linear-gradient(150deg,#4C5A6E 0%,#8B96A5 60%,#D8DDE3 100%)}
+
+/* ---------- SHOT LIST PAGE ---------- */
+.shotlist{background:var(--paper);border-radius:18px;box-shadow:0 22px 60px -24px rgba(11,26,44,.3);padding:44px 48px;margin-bottom:60px}
+.shotlist h2{font-family:var(--display);font-size:30px;font-weight:500;color:var(--navy)}
+.shotlist .lead{font-size:14px;color:var(--slate);line-height:1.7;margin-top:10px;max-width:560px}
+.sl-group{margin-top:34px}
+.sl-group h3{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:800;color:var(--gold-deep);display:flex;align-items:center;gap:10px}
+.sl-group h3::after{content:"";flex:1;height:1px;background:var(--line)}
+.sl-row{display:grid;grid-template-columns:120px 1fr 150px;gap:16px;align-items:baseline;padding:13px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.sl-row:last-child{border-bottom:0}
+.sl-row .slot{font-weight:800;color:var(--navy);font-size:12px;letter-spacing:.04em}
+.sl-row .desc{color:var(--slate);line-height:1.55}
+.sl-row .desc em{color:var(--mist);font-style:normal;font-size:12px;display:block;margin-top:2px}
+.sl-row .dim{font-family:var(--display);font-size:14px;color:var(--gold-deep);text-align:right;white-space:nowrap}
+.sl-tip{background:var(--sand);border-left:3px solid var(--gold);border-radius:0 14px 14px 0;padding:18px 22px;margin-top:32px;font-size:13px;color:var(--slate);line-height:1.7}
+.sl-tip strong{color:var(--navy)}
+
+.hide{display:none!important}
+@media (max-width:860px){
+  body{flex-direction:column;overflow:auto}
+  .sidebar{width:100%;min-width:0;height:auto}
+  .main{height:auto;overflow:visible}
+  .hero .content{padding:80px 26px 36px}
+  .hero h1{font-size:30px}
+  .body-pad,.shotlist{padding:32px 24px}
+  .em-head{padding:18px 24px}
+  .grid2,.toc{grid-template-columns:1fr}
+  .inbox-bar{padding:14px 24px}
+  .em-cta-band,.em-foot{padding-left:24px;padding-right:24px}
+  .news-item{flex-direction:column}
+  .sl-row{grid-template-columns:1fr;gap:4px}
+  .sl-row .dim{text-align:left}
+}
+@media (prefers-reduced-motion:reduce){.btn,.btn::after,.dcard,.pkg,.session,.toc a{transition:none}.btn:hover{transform:none}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="tag-logo" viewBox="0 0 411 226.8"> <style type="text/css"> .st0{fill:currentColor;} </style> <g> <path class="st0" d="M335.8,55c0,2.1-0.1,3.7-0.4,4.9c-0.3,1.2-0.9,2-1.7,2.6c-0.9,0.6-2.1,1-3.7,1.2c-1.6,0.2-3.7,0.2-6.2,0.2H306 c0-4.1,0.4-8,1.2-11.7c0.8-3.7,1.9-7,3.3-9.8c1.4-2.8,3.1-5.1,5-6.8c1.9-1.7,4.1-2.6,6.5-2.6c2.3,0,4.3,0.7,6,2.1 c1.7,1.4,3.1,3.2,4.3,5.4c1.2,2.1,2,4.5,2.6,7.1C335.5,50.2,335.8,52.7,335.8,55 M363.4,61.5c-0.3-2.8-1-5.7-2.1-8.7 c-1.1-3-2.7-6-4.7-8.9c-2-2.9-4.6-5.5-7.8-7.9c-3.2-2.4-7-4.3-11.4-5.7c-4.4-1.4-9.6-2.1-15.5-2c-7.2,0.1-13.8,1.6-19.8,4.4 c-4,1.9-7.5,4.2-10.7,7c-0.1,0.6-0.1,1.2-0.2,1.8c-0.5,3.5-1.5,7-2.9,10.6L276,83.5c0.7,5.6,2.1,10.9,4.4,15.7 c2.6,5.6,6,10.4,10.4,14.4c4.3,4,9.4,7.1,15.2,9.4s12,3.4,18.7,3.4c5.3,0,9.9-0.7,14-2c4.1-1.3,7.5-2.9,10.5-4.7 c2.9-1.8,5.3-3.7,7.2-5.6c1.9-1.9,3.4-3.5,4.4-4.9c1.1-1.5,1.2-2.9,0.3-4c-0.8-0.8-2.1-0.8-4-0.2c-5.6,2-10.9,3-16,3 c-8.3,0-15.5-2.6-21.5-7.7c-6-5.1-10-12.6-12.1-22.5c-0.2-1.1-0.4-2.2-0.6-3.2c-0.2-1-0.4-2.1-0.6-3.2h53.7c1.9,0,3-1,3.3-3 C363.7,66.7,363.7,64.3,363.4,61.5 M408.2,122.2c0-1.2-1-2.1-3-2.8c-1.9-0.5-3-1.7-3.5-3.4c-0.4-1.7-0.7-4.1-0.7-7.2V5.4 c0-1.2-0.3-2-1-2.4c-0.7-0.4-1.5-0.3-2.6,0.2c-3.1,1.5-6.2,2.9-9.4,4c-3.2,1.2-6.2,2.1-9.1,3c-2.9,0.8-5.5,1.5-7.8,2 c-2.4,0.5-4.3,0.9-5.7,1.1c-2,0.4-3,1.4-3,3c0,1.3,1,2.3,3.1,2.8c1.8,0.6,2.9,1.7,3.3,3.5c0.4,1.8,0.7,4.2,0.7,7.2v79.1 c0,3.1-0.2,5.5-0.7,7.2c-0.4,1.7-1.5,2.8-3.3,3.4c-2.1,0.7-3.1,1.6-3.1,2.8c0,1.6,1.1,2.4,3.3,2.1c1.8-0.2,4.2-0.4,7.4-0.5 c3.2-0.1,7.2-0.2,12.2-0.2c4.9,0,9,0.1,12.2,0.2c3.2,0.1,5.6,0.3,7.2,0.5C407.1,124.5,408.2,123.8,408.2,122.2"/> <path class="st0" d="M129.1,29.6c-2.9-1.4-9.5-2.2-13.9-2.2c-5.8,0-10.4,1.6-13.7,4.9s-5.8,7.2-7.4,11.9l-1.3-12.5 c-0.2-1.2-0.6-2-1.2-2.4c-0.6-0.4-1.5-0.3-2.6,0.2c-1,0.5-1.9,0.9-2.8,1.3c-15.6,5.7-43.1,7.8-45.2,8V11.6c0-1.3-0.4-2.2-1.1-2.6 c-0.7-0.4-1.5-0.6-2.4-0.6c-1.6,0-2.8,0.8-3.5,2.5c-1,2.4-2.4,4.8-4.4,7c-1.9,2.3-4.1,4.3-6.5,6c-2.4,1.8-5,3.1-7.7,4.1 c-2.7,1-5.5,1.5-8.4,1.5H5.9c-1.2,0-2,0.3-2.5,0.8c-0.4,0.6-0.7,1.5-0.7,3c0,1.4,0.2,2.4,0.7,3c0.4,0.6,1.3,0.9,2.5,0.9h3.6v64 c0,8.2,2.1,15.2,6.3,18.8c4.2,3.6,10.1,5.4,17.8,5.4c5.4,0,9.7-0.8,12.9-2.3c3.2-1.5,5.8-3.7,7.9-6.4c1.1-1.5,1.2-2.9,0.3-4 c-0.9-0.8-2.2-0.8-4-0.2c-0.9,0.2-1.8,0.5-2.8,0.7c-1,0.3-2,0.2-3.1-0.2c-1.2-0.4-2.1-1.4-2.8-2.8c-0.7-1.4-1-3.6-1-6.4V45.6h11.1 l0.6,0l5.8,0.1c3.5,0.2,4,1.7,4.4,3.2c0.3,2,0.3,4,0.3,7.2V108c0,3.2-0.2,5.6-0.7,7.2c-0.4,1.6-1.6,2.7-3.5,3.3 c-2.1,0.7-3.1,1.6-3.1,2.8c0,1.6,1.1,2.4,3.3,2.1c1.9-0.2,4.5-0.4,7.9-0.5c3.4-0.1,7.7-0.2,12.8-0.2c5.3,0,9.7,0.1,13.2,0.2 c3.5,0.1,6.2,0.3,8.1,0.5c2.3,0.2,3.5-0.5,3.5-2.1c0-1.2-1.1-2.1-3.3-2.6c-2.5-0.4-4.3-1.5-5.3-3c-1-1.6-1.5-4.1-1.5-7.7V62 c0-1.8,0.1-3.7,0.2-5.9c0.1-2.2,0.4-4.3,0.9-6.2C96.2,48,97,46.3,98,45c1-1.3,2.4-2,4.2-2c1.9,0,3.3,0.4,4.3,1.2 c1,0.8,7.3,6.5,8.3,7.3c-0.3-2.3-0.4-6.4,0.4-8.9c1-3,1.6-5,4.4-7.6C122.1,32.9,125.2,31.1,129.1,29.6"/> <path class="st0" d="M284.5,34.2c-0.7-2.7-2-5-4-6.7c-2-1.7-4.7-2.6-8.2-2.7c-2.1-0.1-3.9,0.2-5.5,0.9c-1.6,0.7-2.9,1.6-3.9,2.8 c-1,1.2-1.7,2.5-2.1,4c-0.4,1.5-0.6,3.1-0.3,4.6c0.3,2.4,1.2,4.4,2.6,6c1.4,1.6,2.7,3.2,3.9,4.8c1.2,1.6,2.1,3.3,2.8,5.1 c0.7,1.8,0.5,4.1-0.5,6.8l-16,44.8l-17.6-60.1c-0.9-3-1.4-5.3-1.6-6.9c-0.2-1.6,0.4-2.8,1.6-3.5c0.8-0.5,1.4-1,1.9-1.3 c0.5-0.3,0.7-0.9,0.7-1.8c0-1.5-1.1-2.2-3.3-2c-1.8,0.2-4.2,0.4-7.2,0.5c-3.1,0.1-7.1,0.2-12,0.2c-5.3,0-9.6-0.1-13.1-0.2 c-3.5-0.2-9.3-0.3-11.3-0.4c-2.2-0.1-3.3,0.6-3.3,2c0,0.8,0.1,1.2,0.6,1.6c0.5,0.4,1.4,0.9,2.4,1.4c0.4,0.2,0.8,0.4,1.3,0.7 c1.6,0.9,3,1.8,4.3,2.9c4.9,4.1,11,16.6,13.3,24.2l20.1,58.8c0.7,1.6,1.8,2.5,3.5,2.5h6.2c0-0.1-0.1-0.1-0.1-0.2l0.2,0.2h12.3 c1.8,0,2.9-0.8,3.5-2.5l26.4-66.6c1.4-3.6,2.4-7.2,2.9-10.6C285.3,40.1,285.2,37,284.5,34.2"/> <path class="st0" d="M146.4,106.2c-2.2-1.6-3.4-4-3.7-7.2c-0.4-3.9,0.2-7.2,2.1-10.2c1.8-2.9,4.1-5.4,6.7-7.6 c2.7-2.1,5.4-4,8.3-5.4c2.9-1.5,5.1-2.8,6.8-3.9v23.3c0,4-1.2,7.2-3.7,9.7c-2.5,2.5-5.5,3.7-9,3.7 C151,108.6,148.6,107.8,146.4,106.2 M199.3,116.3c-0.3-1-0.6-2.2-0.7-3.4c-0.2-1.2-0.2-2.5-0.2-3.8v-3.6V100c0-2.5,0-5.3-0.1-8.3 c-0.1-3.1-0.1-6.2-0.2-9.5c-0.1-3.2-0.1-6.2-0.2-9c-0.1-2.7-0.1-5.1-0.1-6.9v-3.1c0-12.1-3.4-21-10.2-26.6 c-6.8-5.6-17.1-8.4-30.9-8.4c-7.4,0-13.6,0.8-18.7,2.4c-5,1.6-9,3.6-11.9,5.9c-2.9,2.4-4.8,5-5.8,7.8c-1,2.8-1.2,5.4-0.6,7.9 c0.6,2.5,1.9,4.5,3.8,6.2c1.9,1.6,4.4,2.6,7.4,2.8c4.1,0.2,7.1-0.3,9-1.6c1.9-1.3,3.3-2.9,4.1-5c0.8-2.1,1.3-4.4,1.5-6.9 c0.2-2.5,0.5-4.9,1.1-7c0.6-2.1,1.5-4,3-5.4c1.4-1.5,3.8-2.2,7-2.2c2.3,0,4.1,0.6,5.5,1.8c1.3,1.2,2.3,3,3,5.3s1.1,5.1,1.2,8.5 c0.2,3.4,0.2,7.2,0.2,11.5v2.5c-1.7,1.4-4.2,2.6-7.6,3.5c-3.4,0.9-7.2,2-11.4,3.1c-4.2,1.2-8.5,2.5-12.9,4.1 c-4.4,1.6-8.4,3.7-12,6.4c-3.6,2.6-6.5,5.9-8.7,9.8c-2.2,3.9-3.3,8.7-3.2,14.4c0.2,6.6,2.8,12,7.8,16.3c5,4.2,12,6.4,21.1,6.4 c2.9,0,5.7-0.3,8.5-1c2.8-0.7,5.5-1.7,8.1-3.1c2.6-1.4,4.9-3.2,7-5.3c2-2.1,3.7-4.6,5.1-7.4c1.2,4,3,6.9,5.4,8.9 c2.4,2,5,3.4,7.8,4.3c2.8,0.9,5.7,1.3,8.5,1.4c2.9,0.1,5.4,0.1,7.6,0.1h2.5c2.4,0,3.7-0.8,3.7-2.5c0-0.8-0.4-1.3-1.1-1.7 c-0.7-0.3-1.4-0.8-2.1-1.5C200,118.2,199.6,117.4,199.3,116.3"/> <path class="st0" d="M381.8,140.2c-2,0.6-3.8,1.4-5.2,2.5c-1.5,1.1-2.6,2.3-3.4,3.8c-0.8,1.5-1.2,3.1-1.2,5c0,2.1,0.4,3.8,1.3,5.2 c0.9,1.4,2,2.6,3.3,3.6c1.3,1,2.8,1.8,4.5,2.5c1.7,0.7,3.2,1.4,4.8,2c1.5,0.7,3,1.4,4.2,2.1c1.3,0.7,2.2,1.7,2.8,2.8 c0.5,0.8,0.7,1.7,0.6,2.6c0,1-0.3,1.8-0.7,2.6c-0.5,0.8-1.1,1.5-2,2c-0.9,0.5-2,0.8-3.3,0.8c-1.4,0-2.5-0.3-3.3-0.9 c-0.8-0.6-1.4-1.3-1.9-2.2c-0.5-0.9-0.8-1.8-1.1-2.8c-0.3-1-0.7-1.9-1.1-2.8c-0.4-0.9-1-1.6-1.7-2.1c-0.7-0.5-1.7-0.8-3-0.7 c-1.2,0-2.1,0.4-2.8,1.1c-0.7,0.7-1.1,1.5-1.3,2.5c-0.1,1,0.1,2.1,0.6,3.2c0.5,1.2,1.4,2.2,2.7,3.2c1.3,1,3,1.8,5.1,2.4 c2.1,0.7,4.7,1,7.8,1c3.5,0,6.4-0.4,8.7-1.2c2.3-0.8,4.1-1.7,5.5-2.9c1.4-1.2,2.3-2.5,2.9-3.9c0.6-1.4,0.9-2.8,1-4.1 c0.1-2-0.1-3.7-0.8-5.1c-0.7-1.4-1.7-2.6-2.9-3.6c-1.2-1-2.7-1.9-4.3-2.6c-1.6-0.7-3.2-1.4-4.9-2.1c-1.7-0.7-3.3-1.4-4.9-2.2 c-1.6-0.8-2.9-1.8-4-2.9c-0.6-0.6-1-1.4-1.1-2.3c-0.2-0.9,0-1.8,0.3-2.7c0.4-0.9,1-1.6,1.9-2.1c0.9-0.6,2.1-0.8,3.7-0.7 c1.2,0.1,2.1,0.4,2.7,0.9c0.6,0.5,1.1,1.1,1.5,1.8c0.3,0.7,0.6,1.4,0.9,2.2c0.2,0.8,0.6,1.5,1,2.2c0.4,0.7,1,1.2,1.8,1.7 c0.8,0.5,1.8,0.7,3.2,0.7c1,0,1.9-0.3,2.6-0.8c0.7-0.6,1.2-1.3,1.4-2.1c0.2-0.9,0.1-1.8-0.3-2.8c-0.4-1-1.2-1.9-2.3-2.8 c-1.2-0.9-2.7-1.6-4.8-2.1c-2-0.6-4.5-0.8-7.6-0.8C386.1,139.4,383.8,139.7,381.8,140.2 M354.9,141.4c-1.4,1.4-2.4,3-3.1,4.9 l-0.5-5.2c-0.1-0.5-0.3-0.8-0.5-1c-0.2-0.2-0.6-0.1-1.1,0.1c-2.6,1.3-5.1,2.3-7.3,2.9c-2.3,0.6-4,1.1-5.2,1.3 c-0.8,0.1-1.2,0.5-1.2,1.2c0,0.5,0.4,0.9,1.3,1.2c0.8,0.2,1.2,0.7,1.4,1.4c0.2,0.7,0.3,1.7,0.3,3v21.4c0,1.3-0.1,2.3-0.3,3 c-0.2,0.7-0.7,1.1-1.4,1.4c-0.9,0.3-1.3,0.7-1.3,1.2c0,0.7,0.5,1,1.4,0.9c0.8-0.1,1.9-0.2,3.3-0.2c1.4,0,3.2-0.1,5.3-0.1 c2.2,0,4,0,5.4,0.1c1.4,0,2.6,0.1,3.3,0.2c1,0.1,1.4-0.2,1.4-0.9c0-0.5-0.5-0.9-1.4-1.1c-1-0.2-1.8-0.6-2.2-1.3 c-0.4-0.7-0.6-1.7-0.6-3.2v-19c0-0.7,0-1.5,0.1-2.4c0-0.9,0.2-1.8,0.4-2.5c0.2-0.8,0.5-1.5,1-2c0.4-0.5,1-0.8,1.7-0.8 c0.8,0,1.4,0.2,1.8,0.5c0.4,0.3,0.7,0.8,1,1.3c0.2,0.5,0.4,1.1,0.6,1.7c0.2,0.6,0.4,1.2,0.7,1.7c0.3,0.5,0.7,1,1.3,1.3 c0.6,0.3,1.3,0.5,2.3,0.6c1.4,0,2.5-0.3,3.5-0.9c1-0.7,1.7-1.5,2.1-2.5c0.5-1,0.7-2.1,0.6-3.3c-0.1-1.2-0.4-2.3-1-3.3 c-0.6-1-1.5-1.9-2.8-2.5c-1.2-0.7-2.8-1-4.7-1C358.2,139.4,356.3,140,354.9,141.4 M309.5,154c0-1.7,0.2-3.3,0.5-4.8 c0.3-1.5,0.8-2.9,1.4-4c0.6-1.2,1.3-2.1,2.1-2.8c0.8-0.7,1.7-1.1,2.7-1.1c1,0,1.8,0.3,2.5,0.9c0.7,0.6,1.3,1.3,1.8,2.2 c0.5,0.9,0.8,1.9,1.1,2.9c0.2,1.1,0.4,2.1,0.4,3c0,0.9-0.1,1.5-0.2,2c-0.1,0.5-0.4,0.8-0.7,1.1c-0.4,0.2-0.9,0.4-1.5,0.5 c-0.7,0.1-1.5,0.1-2.5,0.1H309.5z M307.9,141.2c-2.4,1.2-4.5,2.7-6.2,4.7c-1.7,2-3,4.3-3.8,6.9c-0.8,2.6-1.1,5.4-0.9,8.3 c0.2,2.8,0.9,5.3,1.9,7.6c1.1,2.3,2.5,4.3,4.3,5.9c1.8,1.7,3.9,2.9,6.2,3.9c2.4,0.9,4.9,1.4,7.7,1.4c2.2,0,4.1-0.3,5.8-0.8 c1.7-0.5,3.1-1.2,4.3-1.9c1.2-0.7,2.2-1.5,3-2.3c0.8-0.8,1.4-1.5,1.8-2c0.5-0.6,0.5-1.2,0.1-1.6c-0.3-0.3-0.9-0.3-1.6-0.1 c-2.3,0.8-4.5,1.2-6.6,1.2c-3.4,0-6.4-1.1-8.9-3.2c-2.5-2.1-4.1-5.2-5-9.3c-0.1-0.5-0.2-0.9-0.2-1.3c-0.1-0.4-0.1-0.9-0.2-1.3h22.1 c0.8,0,1.2-0.4,1.4-1.2c0.1-0.8,0.1-1.8,0-3c-0.1-1.2-0.4-2.4-0.9-3.6c-0.5-1.2-1.1-2.5-1.9-3.7c-0.8-1.2-1.9-2.3-3.2-3.3 c-1.3-1-2.9-1.8-4.7-2.3c-1.8-0.6-3.9-0.9-6.4-0.8C313.1,139.4,310.4,140,307.9,141.2 M287.3,138.9c-0.7,0.3-1.2,0.7-1.6,1.2 c-0.4,0.5-0.7,1-0.9,1.7c-0.2,0.6-0.2,1.3-0.1,1.9c0.2,1,0.5,1.8,1.1,2.5c0.5,0.7,1.1,1.3,1.6,2c0.5,0.7,0.9,1.4,1.2,2.1 c0.2,0.7,0.2,1.7-0.2,2.8l-6.6,18.4l-7.2-24.7c-0.4-1.2-0.6-2.2-0.7-2.9c-0.1-0.7,0.1-1.2,0.6-1.4c0.4-0.2,0.6-0.4,0.8-0.5 c0.2-0.1,0.3-0.4,0.3-0.7c0-0.6-0.5-0.9-1.4-0.8c-0.7,0.1-1.7,0.2-2.9,0.2c-1.3,0-2.9,0.1-5,0.1c-2.2,0-4,0-5.5-0.1 c-1.4-0.1-2.5-0.1-3.4-0.2c-0.9,0-1.4,0.2-1.4,0.8c0,0.3,0.1,0.6,0.3,0.7c0.2,0.2,0.5,0.3,0.9,0.5c0.8,0.3,1.4,0.7,1.9,1.3 c0.4,0.6,0.9,1.6,1.5,3.1l2.2,6.2l-6.7,18.6l-7.3-24.7c-0.4-1.3-0.6-2.2-0.7-2.9c-0.1-0.7,0.1-1.1,0.6-1.5c0.4-0.2,0.6-0.3,0.8-0.5 c0.2-0.2,0.3-0.4,0.3-0.7c0-0.6-0.5-0.9-1.4-0.8c-0.7,0.1-1.7,0.1-3,0.2c-1.3,0-2.9,0-5,0c-2.2,0-4,0-5.4-0.1 c-1.4,0-2.5-0.1-3.3-0.1c-0.9,0-1.4,0.2-1.4,0.8c0,0.5,0.4,0.9,1.2,1.2c0.8,0.3,1.4,0.8,1.8,1.4c0.4,0.6,0.9,1.6,1.4,3.1l11.5,31.4 c0.3,0.7,0.7,1,1.4,1h5.9V179l1.8,0.1c0.7,0,1.2-0.3,1.4-1l7.8-19.6l7.1,19.6c0.3,0.7,0.7,1,1.4,1h7.7c0.6,0,1.1-0.3,1.4-1 l10.8-27.4c0.6-1.5,1-3,1.2-4.4c0.2-1.4,0.2-2.7-0.1-3.8c-0.3-1.1-0.8-2-1.6-2.8c-0.8-0.7-1.9-1.1-3.4-1.1 C288.7,138.4,288,138.6,287.3,138.9 M208.9,140.2c-2,0.6-3.8,1.4-5.2,2.5c-1.5,1.1-2.6,2.3-3.4,3.8c-0.8,1.5-1.2,3.1-1.2,5 c0,2.1,0.4,3.8,1.3,5.2c0.9,1.4,2,2.6,3.3,3.6c1.3,1,2.8,1.8,4.5,2.5c1.7,0.7,3.2,1.4,4.8,2c1.5,0.7,3,1.4,4.2,2.1 c1.3,0.7,2.2,1.7,2.8,2.8c0.5,0.8,0.7,1.7,0.6,2.6c0,1-0.3,1.8-0.7,2.6c-0.5,0.8-1.1,1.5-2,2c-0.9,0.5-2,0.8-3.3,0.8 c-1.4,0-2.5-0.3-3.3-0.9c-0.8-0.6-1.4-1.3-1.9-2.2c-0.5-0.9-0.8-1.8-1.1-2.8c-0.3-1-0.7-1.9-1.1-2.8c-0.4-0.9-1-1.6-1.7-2.1 c-0.7-0.5-1.7-0.8-3-0.7c-1.2,0-2.1,0.4-2.8,1.1c-0.7,0.7-1.1,1.5-1.3,2.5c-0.1,1,0.1,2.1,0.6,3.2c0.5,1.2,1.4,2.2,2.7,3.2 c1.3,1,3,1.8,5.1,2.4c2.1,0.7,4.7,1,7.8,1c3.5,0,6.4-0.4,8.7-1.2c2.3-0.8,4.1-1.7,5.5-2.9c1.4-1.2,2.3-2.5,2.9-3.9 c0.6-1.4,0.9-2.8,1-4.1c0.1-2-0.1-3.7-0.8-5.1c-0.7-1.4-1.7-2.6-2.9-3.6c-1.2-1-2.7-1.9-4.3-2.6c-1.6-0.7-3.2-1.4-4.9-2.1 c-1.7-0.7-3.3-1.4-4.9-2.2c-1.6-0.8-2.9-1.8-4-2.9c-0.6-0.6-1-1.4-1.1-2.3c-0.2-0.9,0-1.8,0.3-2.7c0.4-0.9,1-1.6,1.9-2.1 c0.9-0.6,2.1-0.8,3.7-0.7c1.2,0.1,2.1,0.4,2.7,0.9c0.6,0.5,1.1,1.1,1.5,1.8c0.3,0.7,0.6,1.4,0.9,2.2c0.2,0.8,0.6,1.5,1,2.2 c0.4,0.7,1,1.2,1.8,1.7c0.8,0.5,1.8,0.7,3.2,0.7c1,0,1.9-0.3,2.6-0.8c0.7-0.6,1.2-1.3,1.4-2.1c0.2-0.9,0.1-1.8-0.3-2.8 c-0.4-1-1.2-1.9-2.3-2.8c-1.2-0.9-2.7-1.6-4.8-2.1c-2-0.6-4.5-0.8-7.6-0.8C213.1,139.4,210.9,139.7,208.9,140.2 M193.3,175.5 c-0.2-0.7-0.2-1.7-0.2-3v-17.1c0-5.3-1.1-9.4-3.3-12.1c-2.2-2.7-5.7-4-10.6-4c-1.6,0-3.1,0.2-4.3,0.6c-1.3,0.4-2.4,0.9-3.3,1.6 c-1,0.7-1.8,1.4-2.4,2.2c-0.7,0.8-1.2,1.7-1.7,2.6l-0.6-5.2c-0.1-0.5-0.3-0.8-0.5-1c-0.2-0.2-0.6-0.1-1.1,0.1 c-2.6,1.3-5.1,2.3-7.3,2.9c-2.3,0.6-4,1.1-5.2,1.3c-0.8,0.1-1.2,0.5-1.2,1.2c0,0.5,0.4,0.9,1.3,1.2c0.8,0.2,1.2,0.7,1.4,1.4 c0.2,0.7,0.3,1.7,0.3,3v21.4c0,1.3-0.1,2.3-0.3,3c-0.2,0.7-0.7,1.2-1.4,1.4c-0.4,0.1-0.7,0.3-0.9,0.4c-0.2,0.2-0.3,0.4-0.3,0.7 c0,0.7,0.5,1,1.4,0.9c0.7-0.1,1.7-0.2,3.1-0.2c1.3,0,3-0.1,5-0.1c2,0,3.7,0,5,0.1c1.3,0,2.3,0.1,3,0.2c0.9,0.1,1.4-0.2,1.4-0.9 c0-0.5-0.4-0.9-1.2-1.2c-0.8-0.2-1.2-0.7-1.4-1.4c-0.2-0.7-0.3-1.7-0.3-3v-17.5c0-1.2,0.1-2.3,0.3-3.5c0.2-1.2,0.6-2.2,1.1-3.1 c0.5-0.9,1.2-1.6,2-2.2c0.8-0.5,1.9-0.8,3.1-0.8c1.2,0,2.2,0.3,2.9,0.8c0.8,0.5,1.4,1.3,1.8,2.2c0.5,0.9,0.8,2,0.9,3.2 c0.2,1.2,0.2,2.5,0.2,3.8v17.1c0,1.3-0.1,2.3-0.2,3c-0.2,0.7-0.6,1.2-1.4,1.4c-0.9,0.3-1.3,0.7-1.3,1.2c0,0.7,0.5,1,1.4,0.9 c0.7-0.1,1.7-0.2,3-0.2c1.3,0,3-0.1,5-0.1c2,0,3.7,0,5,0.1c1.3,0,2.3,0.1,3,0.2c1,0.1,1.4-0.2,1.4-0.9c0-0.5-0.4-0.9-1.3-1.2 C193.9,176.7,193.5,176.2,193.3,175.5 M125.3,171.5c-0.9-0.7-1.4-1.6-1.5-3c-0.2-1.6,0.1-3,0.8-4.2c0.7-1.2,1.7-2.2,2.8-3.1 c1.1-0.9,2.2-1.6,3.4-2.2c1.2-0.6,2.1-1.1,2.8-1.6v9.6c0,1.6-0.5,3-1.5,4c-1,1-2.3,1.5-3.7,1.5 C127.2,172.5,126.2,172.2,125.3,171.5 M146.9,175.7c-0.1-0.4-0.2-0.9-0.3-1.4c-0.1-0.5-0.1-1-0.1-1.6v-1.5v-2.3c0-1,0-2.2,0-3.4 c0-1.3,0-2.6-0.1-3.9c0-1.3,0-2.6-0.1-3.7c0-1.1,0-2.1,0-2.9v-1.3c0-5-1.4-8.6-4.2-10.9c-2.8-2.3-7-3.5-12.7-3.5 c-3,0-5.6,0.3-7.6,1c-2.1,0.7-3.7,1.5-4.9,2.4s-2,2-2.4,3.2c-0.4,1.2-0.5,2.2-0.2,3.3c0.2,1,0.8,1.9,1.6,2.5c0.8,0.7,1.8,1.1,3,1.2 c1.7,0.1,2.9-0.1,3.7-0.6c0.8-0.5,1.4-1.2,1.7-2.1c0.3-0.9,0.5-1.8,0.6-2.9c0.1-1,0.2-2,0.4-2.9c0.2-0.9,0.6-1.6,1.2-2.2 c0.6-0.6,1.5-0.9,2.9-0.9c1,0,1.7,0.2,2.2,0.7c0.5,0.5,1,1.2,1.2,2.2c0.3,1,0.4,2.1,0.5,3.5c0.1,1.4,0.1,3,0.1,4.7v1 c-0.7,0.6-1.7,1.1-3.1,1.5c-1.4,0.4-3,0.8-4.7,1.3c-1.7,0.5-3.5,1-5.3,1.7c-1.8,0.7-3.5,1.5-4.9,2.6c-1.5,1.1-2.7,2.4-3.6,4 c-0.9,1.6-1.3,3.6-1.3,5.9c0.1,2.7,1.2,4.9,3.2,6.7c2,1.7,4.9,2.6,8.6,2.6c1.2,0,2.3-0.1,3.5-0.4c1.2-0.3,2.3-0.7,3.3-1.3 c1.1-0.6,2-1.3,2.9-2.2c0.8-0.9,1.5-1.9,2.1-3.1c0.5,1.6,1.2,2.9,2.2,3.7c1,0.8,2,1.4,3.2,1.8c1.2,0.4,2.3,0.6,3.5,0.6 c1.2,0,2.2,0,3.1,0h1c1,0,1.5-0.3,1.5-1c0-0.3-0.1-0.5-0.4-0.7c-0.3-0.1-0.6-0.3-0.8-0.6C147.3,176.4,147.1,176.1,146.9,175.7"/> <path class="st0" d="M396.9,223.7h2.4v-8.5l8.9-12.9h-2.8l-7.3,10.7l-7.2-10.7H388l8.9,12.9V223.7z M375.9,224c4.2,0,7.3-2.4,7.3-6 v-0.1c0-3.3-2.2-5-7-6c-4.7-1-5.8-2.1-5.8-4.2v-0.1c0-1.9,1.8-3.4,4.5-3.4c2.2,0,4.2,0.7,6.2,2.3l1.4-1.9c-2.2-1.7-4.4-2.6-7.5-2.6 c-4.1,0-7,2.5-7,5.8v0.1c0,3.5,2.3,5.1,7.2,6.2c4.5,0.9,5.6,2.1,5.6,4.1v0.1c0,2.1-1.9,3.6-4.8,3.6c-3,0-5.1-1-7.3-3l-1.5,1.8 C369.7,222.8,372.5,224,375.9,224 M346,215.8l4.9-10.9l4.9,10.9H346z M340,223.7h2.5l2.5-5.6h11.6l2.5,5.6h2.6l-9.7-21.5h-2.3 L340,223.7z M318.3,223.7h15.6v-2.2h-13.2V214h11.7v-2.2h-11.7v-7.3h13v-2.2h-15.4V223.7z M284.2,223.7h14.4v-2.2h-12v-19.1h-2.4 V223.7z M260.7,223.7h15.6v-2.2h-13.2V214h11.7v-2.2h-11.7v-7.3h13v-2.2h-15.4V223.7z M242.1,223.8h2.1l9.2-21.5h-2.6l-7.6,18.4 l-7.6-18.4h-2.7L242.1,223.8z M214.8,215.8l4.9-10.9l4.9,10.9H214.8z M208.8,223.7h2.5l2.5-5.6h11.6l2.5,5.6h2.6l-9.7-21.5h-2.3 L208.8,223.7z M188,213.2v-8.7h6.6c3.4,0,5.5,1.6,5.5,4.2v0.1c0,2.7-2.3,4.4-5.5,4.4H188z M185.6,223.7h2.4v-8.3h6.1l6.2,8.3h3 l-6.6-8.7c3.4-0.6,5.8-2.7,5.8-6.2v-0.1c0-1.7-0.6-3.2-1.6-4.2c-1.3-1.3-3.4-2.1-6.1-2.1h-9.2V223.7z M168.4,223.7h2.4v-19.1h7.2 v-2.2h-16.8v2.2h7.2V223.7z M133.5,224c3.6,0,6.6-1.5,8.6-3.3v-8.5h-8.8v2.2h6.5v5.3c-1.5,1.2-3.7,2.1-6.2,2.1 c-5.2,0-8.5-3.8-8.5-8.9v-0.1c0-4.8,3.4-8.8,8.1-8.8c3,0,4.9,1,6.5,2.4l1.6-1.8c-2.1-1.8-4.4-2.8-8-2.8c-6.4,0-10.7,5.2-10.7,11 v0.1C122.6,219.1,126.8,224,133.5,224 M96.4,223.7h2.3v-17.5l13.8,17.5h1.9v-21.4h-2.3v17.1l-13.5-17.1h-2.3V223.7z M84.7,223.7 h2.4v-21.4h-2.4V223.7z M59.5,223.7h2.4v-5.7l4.5-4.6l8.2,10.3h3l-9.6-12l9.2-9.3h-3.1l-12.3,12.8v-12.8h-2.4V223.7z M36.5,215.8 l4.9-10.9l4.9,10.9H36.5z M30.5,223.7H33l2.5-5.6h11.6l2.5,5.6h2.6l-9.7-21.5h-2.3L30.5,223.7z M2.8,223.7h2.3v-17.3l7.8,11.4H13 l7.8-11.4v17.3h2.4v-21.4h-2.4L13,214l-7.8-11.7H2.8V223.7z"/> </g> </symbol>
+    <symbol id="flightpath" viewBox="0 0 640 400" preserveAspectRatio="none">
+      <path d="M -20 320 C 140 240, 300 300, 420 200 S 620 60, 680 40" fill="none" stroke="#F0A81E" stroke-width="2" stroke-dasharray="2 9" stroke-linecap="round"/>
+      <path d="M 420 200 l 14 -6 -5 14 z" fill="#F0A81E"/>
+    </symbol>
+  </defs>
+</svg>
+
+<nav class="sidebar" aria-label="Campaign list">
+  <div class="sb-brand">
+    <svg class="logo" viewBox="0 0 411 226.8" role="img" aria-label="Travel Answers Group"><use href="#tag-logo"/></svg>
+    <div class="tagline">Make Travel Easy</div>
+    <div class="sub">Campaign redesign concepts v2 &middot; July 2026<br>Photo slots labelled with specs throughout.</div>
+  </div>
+
+  <div class="sb-group journey">
+    <h3>Advisor Nurture Flow &middot; Stage 1</h3>
+    <button class="nav-item" data-id="n1"><span class="ni-badge">1.1</span><span class="ni-txt"><span class="ni-title">Welcome to Travel Answers</span><span class="ni-sub">Who we are &middot; destinations</span></span></button>
+    <button class="nav-item" data-id="n2"><span class="ni-badge">1.2</span><span class="ni-txt"><span class="ni-title">Work smarter with TAG</span><span class="ni-sub">The Advisor Hub</span></span></button>
+    <button class="nav-item" data-id="n3"><span class="ni-badge">1.3</span><span class="ni-txt"><span class="ni-title">Tools that save you time</span><span class="ni-sub">Live booking platform</span></span></button>
+    <button class="nav-item" data-id="n4"><span class="ni-badge">1.4</span><span class="ni-txt"><span class="ni-title">Earn rewards while you sell</span><span class="ni-sub">TIER rewards launch</span></span></button>
+  </div>
+
+  <div class="sb-group">
+    <h3>Destination Campaigns</h3>
+    <button class="nav-item" data-id="c1"><span class="ni-badge">KR</span><span class="ni-txt"><span class="ni-title">Winter Magic in South Korea</span><span class="ni-sub">Packages from $1,899</span></span></button>
+    <button class="nav-item" data-id="c2"><span class="ni-badge">PT</span><span class="ni-txt"><span class="ni-title">Portugal Awaits &middot; Saudade</span><span class="ni-sub">Packages from $1,848</span></span></button>
+    <button class="nav-item" data-id="c3"><span class="ni-badge">EN</span><span class="ni-txt"><span class="ni-title">England, Your Way</span><span class="ni-sub">Packages from $1,873</span></span></button>
+    <button class="nav-item" data-id="c4"><span class="ni-badge">TH</span><span class="ni-txt"><span class="ni-title">Thailand Specialist Training</span><span class="ni-sub">Webinar invite &middot; 3 sessions</span></span></button>
+  </div>
+
+  <div class="sb-group">
+    <h3>Newsletter</h3>
+    <button class="nav-item" data-id="nl1"><span class="ni-badge">06</span><span class="ni-txt"><span class="ni-title">Travel Answers Insider</span><span class="ni-sub">June 2026 edition</span></span></button>
+  </div>
+
+  <div class="sb-group">
+    <h3>Production</h3>
+    <button class="nav-item util" data-id="shots"><span class="ni-badge">&#128247;</span><span class="ni-txt"><span class="ni-title">Image shot list</span><span class="ni-sub">All 29 assets, with sizes</span></span></button>
+  </div>
+
+  <div class="sb-foot">Design system: TAG Navy #14273F &middot; Gold #F0A81E &middot; Fraunces / Public Sans.<br>Built for Mailchimp: 640px single column &middot; export images @2x.</div>
+</nav>
+
+<main class="main">
+  <div class="inbox-bar" id="inbox-bar">
+    <div class="from">Travel Answers Group &lt;hello@travelanswers.com&gt;</div>
+    <div class="subject" id="ib-subject"></div>
+    <div class="preheader" id="ib-preheader"></div>
+  </div>
+  <div class="canvas"><div id="page-root"></div></div>
+  <div class="notes" id="notes-wrap"><details><summary>What changed in this redesign</summary><div class="nbody" id="design-notes"></div></details></div>
+</main>
+
+<script>
+const emHead = `<div class="em-head"><svg class="logo" viewBox="0 0 411 226.8" role="img" aria-label="Travel Answers Group"><use href="#tag-logo"/></svg><div class="mte">Make<br>Travel Easy</div></div>`;
+const emFoot = (cta) => `
+${cta ? `<div class="em-cta-band"><svg class="flight" viewBox="0 0 640 400" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%"><use href="#flightpath"/></svg><h3>${cta.h}</h3><p>${cta.p}</p><a class="btn btn-gold" href="#">${cta.b}</a></div>` : ``}
+<div class="em-foot">
+  <svg class="logo" viewBox="0 0 411 226.8" aria-hidden="true"><use href="#tag-logo"/></svg>
+  Our Destination Specialists are standing by to tailor dream vacations for your clients.
+  <div class="links"><a href="#">Update preferences</a> &nbsp;&middot;&nbsp; <a href="#">Unsubscribe</a></div>
+  Copyright &copy; 2026 *|LIST:COMPANY|*. All rights reserved.
+</div>`;
+const greet = `<p class="greet">Hi <span class="fname">*|FNAME|*</span>,</p>`;
+const spec = (t,d) => `<span class="spec">${t} &middot; <b>${d}</b></span>`;
+const heroFlight = `<svg class="flight" viewBox="0 0 640 400" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%"><use href="#flightpath"/></svg>`;
+
+const campaigns = {
+
+n1:{
+subject:"Welcome to Travel Answers — let's make travel easy",
+preheader:"30+ years helping advisors bring incredible vacations to life.",
+notes:`<p><strong>v2:</strong> hero is now a full photo slot with navy overlay and the dotted flight-path motif; the six destination cards carry photo specs so the grid drops straight into production.</p><p><strong>Hierarchy:</strong> one hero message, one primary CTA; copy trimmed ~40% from the original.</p>`,
+html:`${emHead}
+<div class="hero ph art-nurthero">${spec("PHOTO — Signature TAG hero: advisor-worthy landscape montage or golden-hour icon (e.g. Milford Sound)","1280×800")}<div class="overlay"></div>${heroFlight}
+  <div class="content">
+    <div class="eyebrow">Welcome to Travel Answers Group</div>
+    <h1>Incredible vacations, made <em>easy</em> for advisors.</h1>
+    <p>For more than 30 years we've helped Travel Advisors bring vacations to life — with destination knowledge, product expertise and practical support at every step.</p>
+  </div>
+</div>
+<div class="body-pad">
+  ${greet}
+  <p class="greet" style="margin-top:12px">Our role is simple: <strong>Make Travel Easy.</strong> That means helping you shape the right trip for the right client, with fully customizable vacations across the world's most sought-after destinations.</p>
+  <div class="sec-label">Where we can take your clients</div>
+  <h2 class="sec-title">Six regions. One team of specialists.</h2>
+  <div class="grid2">
+    <div class="dcard"><div class="img ph art-nz">${spec("Milford Sound / Southern Alps","592×256")}<span class="dn">New Zealand</span></div><div class="txt">Fully customizable itineraries across both islands — iconic highlights to hidden gems.<br><a href="#">Learn more &rarr;</a></div></div>
+    <div class="dcard"><div class="img ph art-au">${spec("Uluru at dusk or Sydney Harbour","592×256")}<span class="dn">Australia</span></div><div class="txt">City stays, coastal escapes, outback adventures and luxury lodges — shaped around each client.<br><a href="#">Learn more &rarr;</a></div></div>
+    <div class="dcard"><div class="img ph art-sp">${spec("Fiji / Tahiti overwater bungalows","592×256")}<span class="dn">South Pacific</span></div><div class="txt">Island escapes across Fiji, Tahiti, the Cook Islands and beyond — romance to multi-island trips.<br><a href="#">Learn more &rarr;</a></div></div>
+    <div class="dcard"><div class="img ph art-af">${spec("Safari — elephants / savannah golden hour","592×256")}<span class="dn">Africa</span></div><div class="txt">Safaris, wildlife and once-in-a-lifetime journeys, handled down to the last detail.<br><a href="#">Learn more &rarr;</a></div></div>
+    <div class="dcard"><div class="img ph art-asia">${spec("Temple lanterns / street food market","592×256")}<span class="dn">Asia</span></div><div class="txt">Culture, cuisine, wellness and multi-stop itineraries your clients can say yes to.<br><a href="#">Learn more &rarr;</a></div></div>
+    <div class="dcard"><div class="img ph art-eu">${spec("European old town / coastal village","592×256")}<span class="dn">Europe</span></div><div class="txt">Journeys shaped around your client's interests — culture, food, history or luxury.<br><a href="#">Learn more &rarr;</a></div></div>
+  </div>
+  <div class="cta-row center" style="justify-content:center"><a class="btn btn-gold" href="#">Discover all destinations</a></div>
+  <div class="strip"><p><strong>Over the next few weeks</strong> we'll introduce the different ways you can work with Travel Answers — from destination specialists to live booking tools.</p></div>
+  <div class="sig">Warm regards,<br><strong>The Travel Answers Team</strong></div>
+</div>
+${emFoot({h:"Ready when you are",p:"Let us tailor a dream vacation for your clients. Our Destination Specialists are standing by.",b:"Contact us today"})}`
+},
+
+n2:{
+subject:"One hub. Every way to work with Travel Answers.",
+preheader:"Resources, sales support and booking tools — all in the Advisor Hub.",
+notes:`<p><strong>v2:</strong> hero photo slot calls for a real advisor lifestyle shot; the three Hub pillars keep the icon rows for instant scanning.</p>`,
+html:`${emHead}
+<div class="hero ph art-hub">${spec("PHOTO — Advisor lifestyle: agent with client / at laptop, warm natural light","1280×800")}<div class="overlay"></div>${heroFlight}
+  <div class="content">
+    <div class="eyebrow">Nurture &middot; Work smarter</div>
+    <h1>Working with us doesn't have to look <em>one way.</em></h1>
+    <p>Some advisors come to us for destination advice. Some want custom itineraries built. Some use our online resources to prepare for the next client conversation. Most use a mix of all three.</p>
+  </div>
+</div>
+<div class="body-pad">
+  ${greet}
+  <div class="sec-label">Introducing</div>
+  <h2 class="sec-title">The Advisor Hub</h2>
+  <p class="sec-intro">A central place to work smarter with Travel Answers — in the way that suits you, your client, and the trip in front of you.</p>
+  <div style="margin-top:14px">
+    <div class="feat"><div class="fic">&#128218;</div><div><h4>Resources</h4><p>Sales tools, training, checklists, trip ideas and practical info to match the right destination and travel style to your client.</p></div></div>
+    <div class="feat"><div class="fic">&#129309;</div><div><h4>Sales support</h4><p>An easy pathway to your Sales Manager whenever you need guidance, updates or help getting started.</p></div></div>
+    <div class="feat"><div class="fic">&#9889;</div><div><h4>Booking tools</h4><p>Direct access to Travel Answers' live booking tools when you want to quote, plan or explore options online.</p></div></div>
+  </div>
+  <div class="pkg" style="margin-top:26px"><div class="img ph art-ui" style="height:200px">${spec("SCREENSHOT — Advisor Hub dashboard on laptop mockup","1280×400")}</div></div>
+  <div class="cta-row center" style="justify-content:center"><a class="btn btn-gold" href="#">Explore the Advisor Hub</a></div>
+  <div class="strip"><p>We're here to help you <strong>save time, sell with confidence</strong> and bring incredible vacations to life.</p></div>
+  <div class="sig">Warm regards,<br><strong>The Travel Answers Team</strong></div>
+</div>
+${emFoot({h:"Prefer to talk it through?",p:"Our Destination Specialists are standing by for tailored help.",b:"Contact us today"})}`
+},
+
+n3:{
+subject:"Quick quotes, live availability — meet your new booking tools",
+preheader:"Another way to work with us. Never a replacement for the team you trust.",
+notes:`<p><strong>v2:</strong> a platform screenshot slot sits directly under the feature rows — real UI is the strongest proof for a tools email. Reassurance strip kept prominent.</p>`,
+html:`${emHead}
+<div class="hero ph art-ui">${spec("SCREENSHOT — Booking platform: itinerary builder or live availability screen","1280×800")}<div class="overlay"></div>${heroFlight}
+  <div class="content">
+    <div class="eyebrow">Nurture &middot; Booking tools</div>
+    <h1>Sometimes you just need a <em>quick answer</em> on availability.</h1>
+    <p>Our live booking platform helps you move faster — quick quotes, live availability, itinerary building and after-hours access — while our Destination Specialists stay at the centre of the experience.</p>
+  </div>
+</div>
+<div class="body-pad">
+  ${greet}
+  <div class="sec-label">Discover</div>
+  <h2 class="sec-title">The live booking platform</h2>
+  <div style="margin-top:6px">
+    <div class="feat"><div class="fic">&#128337;</div><div><h4>Check live availability</h4><p>Explore product options and pricing across Australia, New Zealand, Fiji and a wide range of global destinations.</p></div></div>
+    <div class="feat"><div class="fic">&#128506;</div><div><h4>Build multi-destination itineraries</h4><p>Piece together travel plans in a simple, flexible way.</p></div></div>
+    <div class="feat"><div class="fic">&#128196;</div><div><h4>Create personalised client proposals</h4><p>Turn your ideas into beautifully branded proposals you can share with clients.</p></div></div>
+    <div class="feat"><div class="fic">&#127769;</div><div><h4>Keep planning after-hours</h4><p>Access tools whenever it suits you — even outside standard business hours.</p></div></div>
+  </div>
+  <div class="pkg" style="margin-top:26px"><div class="img ph art-ui" style="height:200px">${spec("SCREENSHOT — Branded client proposal output","1280×400")}</div></div>
+  <div class="cta-row"><a class="btn btn-gold" href="#">Sign up now</a><a class="btn btn-ghost" href="#">Request a demo</a></div>
+  <div class="strip"><p><strong>Another way to work with us — not a replacement for the team you trust.</strong> When an itinerary needs a more tailored touch, our Destination Specialists are always here to help.</p></div>
+  <div class="sig">Warm regards,<br><strong>The Travel Answers Team</strong></div>
+</div>
+${emFoot({h:"Need a hand getting started?",p:"Your Sales Manager can walk you through the platform in 15 minutes.",b:"Contact your Sales Manager"})}`
+},
+
+n4:{
+subject:"Introducing TIER — get rewarded for every eligible booking",
+preheader:"5% on your first eligible reservation. Travel for yourself.",
+notes:`<p><strong>v2:</strong> hero calls for an aspirational "advisor as traveller" image — TIER's promise is personal travel, so the photo should sell that, not a generic reward graphic. Stats stay in the hero.</p>`,
+html:`${emHead}
+<div class="hero ph art-tier">${spec("PHOTO — Aspirational: traveller relaxing at resort/infinity pool (the advisor's own trip)","1280×860")}<div class="overlay"></div>${heroFlight}
+  <div class="content">
+    <div class="eyebrow">Travel Insider Exclusive Rewards</div>
+    <h1>Your clients get incredible vacations. Now <em>you</em> get rewarded too.</h1>
+    <p>TIER is our advisor rewards programme — a thank-you for growing your business with Travel Answers on eligible South Pacific and Asia bookings.</p>
+    <div class="tier-hero-stat">
+      <div class="stat"><b>5%</b><span>First eligible reservation</span></div>
+      <div class="stat"><b>2%</b><span>Every one after that</span></div>
+    </div>
+  </div>
+</div>
+<div class="body-pad">
+  ${greet}
+  <div class="sec-label">Simple &middot; flexible &middot; built around you</div>
+  <h2 class="sec-title">How TIER works</h2>
+  <div class="tier">
+    <div class="tstep"><div><h4>Book your way</h4><p>Use our online booking tools when you want to move quickly, or work directly with our Destination Specialists when an itinerary needs a tailored touch. Both earn.</p></div></div>
+    <div class="tstep"><div><h4>Clients travel</h4><p>Rewards become available after your clients complete their travels.</p></div></div>
+    <div class="tstep"><div><h4>Travel for yourself</h4><p>Redeem rewards toward your own personal travel, booked through Travel Answers.</p></div></div>
+    <div class="tstep"><div><h4>Track it in your Advisor Hub</h4><p>See your available balance, pending rewards and redemption history in your Advisor Hub portal.</p></div></div>
+  </div>
+  <div class="cta-row"><a class="btn btn-gold" href="#">Learn more about TIER</a><a class="btn btn-ghost" href="#">Register for booking tools</a></div>
+  <div class="strip"><p>Your next client booking could bring <strong>your next personal trip</strong> a little closer.</p></div>
+  <div class="sig">Warm regards,<br><strong>The Travel Answers Team</strong></div>
+</div>
+${emFoot({h:"Not yet on the booking platform?",p:"Register now and start earning from your first eligible reservation.",b:"Register now"})}`
+},
+
+c1:{
+subject:"Winter magic in South Korea — escapes from $1,899",
+preheader:"Snowy slopes, illuminated palaces and cozy street food. Dec–Feb.",
+notes:`<p><strong>v2:</strong> the hero spec asks for Gyeongbokgung Palace in snow — an image that says both "Korea" and "winter" instantly. Package images now specify ski-slope action vs Seoul-night mood so the two trips feel distinct.</p>`,
+html:`${emHead}
+<div class="hero ph art-koreahero">${spec("PHOTO — Gyeongbokgung Palace in snow, hanbok figures if possible","1280×800")}<div class="overlay"></div>${heroFlight}
+  <div class="content">
+    <div class="eyebrow">Destination Spotlight &middot; December – February</div>
+    <h1>Winter Magic in <em>South Korea</em></h1>
+    <p>Snowy mountains, vibrant cities, festive markets and illuminated palaces. From cozy street food and luxury spas to world-class skiing — a winter escape beyond the usual hotspots.</p>
+    <div class="price">Packages from <strong>$1,899pp*</strong></div>
+  </div>
+</div>
+<div class="body-pad tight">
+  <div class="sec-label">Hand-picked itineraries</div>
+  <h2 class="sec-title">Two ways to do a Korean winter</h2>
+  <div class="pkg">
+    <div class="img ph art-korea">${spec("Yongpyong ski slopes / skier action","1280×360")}<span class="tagchip">Pyeongchang &middot; Seoul</span></div>
+    <div class="inner">
+      <h3>Yongpyong Ski Resort Experience</h3>
+      <div class="meta"><span class="route">5 days &middot; 4 nights</span><span class="pr">from <strong>$1,899pp*</strong></span></div>
+      <ul>
+        <li>4 nights superior accommodation — Pyeongchang (3) and Seoul (1), breakfast daily</li>
+        <li>Private 2-hour ski lesson and Balwangsan Cable Car ride</li>
+        <li>Half-day Seoul tour to iconic sights, private transfers throughout</li>
+      </ul>
+      <p class="fine">*Land only, based on double occupancy. Excludes international airfare, other meals and drinks.</p>
+      <a class="btn btn-gold" href="#">Explore package</a>
+    </div>
+  </div>
+  <div class="pkg">
+    <div class="img ph art-korea2">${spec("Seoul at night / N Seoul Tower or Nami Island in winter","1280×360")}<span class="tagchip">Seoul &middot; Chuncheon</span></div>
+    <div class="inner">
+      <h3>Korea Winter Magic</h3>
+      <div class="meta"><span class="route">7 days &middot; 6 nights</span><span class="pr">from <strong>$3,199pp*</strong></span></div>
+      <ul>
+        <li>6 nights superior accommodation — Seoul (5) and Chuncheon (1), breakfast daily</li>
+        <li>Private car and English-speaking driver/guide throughout</li>
+        <li>Gyeongbokgung Palace, Namsan Cable Car, markets and temples</li>
+        <li>Eobi Ice Valley, Gangchon ski experience, Nami Island day trip and Korea's tallest observation deck</li>
+      </ul>
+      <p class="fine">*Land only, based on double occupancy. Excludes international airfare, other meals and drinks.</p>
+      <a class="btn btn-gold" href="#">Explore package</a>
+    </div>
+  </div>
+  <div class="cta-row center" style="justify-content:center"><a class="btn btn-ghost" href="#">Explore all South Korea itineraries</a></div>
+</div>
+${emFoot({h:"Want it tailored?",p:"Every itinerary is fully customizable. Our Destination Specialists will shape it around your client.",b:"Talk to a specialist"})}`
+},
+
+c2:{
+subject:"Portugal awaits — experience the magic of saudade",
+preheader:"Fully customizable journeys from $1,848. Lisbon, Porto, the Algarve.",
+notes:`<p><strong>v2:</strong> hero spec: Alfama at golden hour with Tram 28 — the strongest single "saudade" image. Each itinerary gets a geographically distinct photo so the three trips read differently at a glance.</p>`,
+html:`${emHead}
+<div class="hero ph art-porthero">${spec("PHOTO — Alfama, Lisbon at golden hour with Tram 28 / rooftops to the Tagus","1280×800")}<div class="overlay"></div>${heroFlight}
+  <div class="content">
+    <div class="eyebrow">Destination Spotlight &middot; Portugal</div>
+    <h1>Some feelings don't translate. <em>Saudade</em> is one of them.</h1>
+    <p>Golden light over Lisbon's seven hills. Fado echoing through Alfama's narrow streets. We design journeys that invite your clients to linger and immerse themselves in this rich cultural mosaic.</p>
+    <div class="price">Packages from <strong>$1,848pp*</strong></div>
+  </div>
+</div>
+<div class="body-pad tight">
+  <div class="sec-label">Hand-crafted &middot; fully customizable</div>
+  <h2 class="sec-title">Vacation inspiration</h2>
+  <p class="sec-intro">These itineraries are starting points — we specialize in tailoring every detail to your client's travel style.</p>
+  <div class="pkg">
+    <div class="img ph art-portugal">${spec("Porto Ribeira waterfront / Douro rabelo boats","1280×360")}<span class="tagchip">Lisbon &middot; Porto</span></div>
+    <div class="inner">
+      <h3>Classic Portugal</h3>
+      <div class="meta"><span class="route">8 days &middot; 7 nights</span><span class="pr">from <strong>$1,848pp*</strong></span></div>
+      <ul>
+        <li>Deluxe/superior accommodation with 3 on-ground experiences</li>
+        <li>Lisbon hop-on hop-off, Douro Valley tour, rail between Lisbon &amp; Porto</li>
+        <li>Round-trip airport and hotel transfers</li>
+      </ul>
+      <a class="btn btn-gold" href="#">Find out more</a>
+    </div>
+  </div>
+  <div class="pkg">
+    <div class="img ph art-portugal2">${spec("Algarve — Benagil caves / golden cliffs and turquoise water","1280×360")}<span class="tagchip">Porto &middot; the Algarve &middot; Lisbon</span></div>
+    <div class="inner">
+      <h3>Coast &amp; Culture</h3>
+      <div class="meta"><span class="route">9 days &middot; 8 nights</span><span class="pr">from <strong>$3,484pp*</strong></span></div>
+      <ul>
+        <li>Domestic flights and superior accommodation included</li>
+        <li>4 on-ground experiences — Douro Valley tour, coastal boat tour, Lisbon city</li>
+        <li>Round-trip airport and hotel transfers</li>
+      </ul>
+      <a class="btn btn-gold" href="#">Find out more</a>
+    </div>
+  </div>
+  <div class="pkg">
+    <div class="img ph art-eu">${spec("Barcelona — Sagrada Família or Park Güell skyline","1280×360")}<span class="tagchip">Barcelona &middot; Madrid &middot; Porto &middot; Lisbon</span></div>
+    <div class="inner">
+      <h3>Iberian Grand Journey</h3>
+      <div class="meta"><span class="route">12 days &middot; 11 nights</span><span class="pr">from <strong>$4,684pp*</strong></span></div>
+      <ul>
+        <li>Spain and Portugal in one seamless multi-city itinerary</li>
+        <li>Superior accommodation with curated experiences in every city</li>
+      </ul>
+      <p class="fine">*Based on double occupancy. Land &amp; air/land options available.</p>
+      <a class="btn btn-gold" href="#">Find out more</a>
+    </div>
+  </div>
+  <div class="cta-row center" style="justify-content:center"><a class="btn btn-ghost" href="#">Discover Portugal</a></div>
+</div>
+${emFoot({h:"Make it theirs",p:"Fully customizable — land and air/land options across every itinerary.",b:"Talk to a specialist"})}`
+},
+
+c3:{
+subject:"England, your way — where every journey is uniquely yours",
+preheader:"No cookie-cutter tours. Customizable journeys from $1,873.",
+notes:`<p><strong>v2:</strong> hero spec: honeyed Cotswolds lane rather than the usual Big Ben — it matches the "not cookie-cutter" positioning. The Two Capitals card pairs London + Eiffel Tower in one frame if available.</p>`,
+html:`${emHead}
+<div class="hero ph art-enghero">${spec("PHOTO — Cotswolds honeyed-stone village lane (Bibury / Castle Combe), soft light","1280×800")}<div class="overlay"></div>${heroFlight}
+  <div class="content">
+    <div class="eyebrow">Destination Spotlight &middot; England</div>
+    <h1>We don't do <em>cookie-cutter</em> tours.</h1>
+    <p>Step into an England both timeless and newly alive — London's royal pageantry and theatre glow, the honeyed villages of the Cotswolds, the ancient mystery of Stonehenge. Designed around your client's interests, pace and perfect blend of icons and hidden discoveries.</p>
+    <div class="price">Packages from <strong>$1,873pp*</strong></div>
+  </div>
+</div>
+<div class="body-pad tight">
+  <div class="sec-label">Featured customizable journeys</div>
+  <h2 class="sec-title">Starting points, not scripts</h2>
+  <div class="pkg">
+    <div class="img ph art-england">${spec("Stonehenge at dawn or Windsor Castle","1280×360")}<span class="tagchip">London &middot; Cotswolds &middot; Stonehenge</span></div>
+    <div class="inner">
+      <h3>Best of England</h3>
+      <div class="meta"><span class="route">6 days &middot; 7 nights</span><span class="pr">from <strong>$1,873pp*</strong></span></div>
+      <ul>
+        <li>Superior accommodation in London's Kensington</li>
+        <li>6 on-ground experiences — Windsor Castle, Bath, the British Museum</li>
+        <li>Thames river cruise and evening city views from the London Eye</li>
+        <li>Round-trip airport and hotel transfers</li>
+      </ul>
+      <a class="btn btn-gold" href="#">Find out more</a>
+    </div>
+  </div>
+  <div class="pkg">
+    <div class="img ph art-england2">${spec("London + Paris pairing: Tower Bridge / Eiffel Tower split or dusk skyline","1280×360")}<span class="tagchip">London &middot; Paris</span></div>
+    <div class="inner">
+      <h3>Two Capitals</h3>
+      <div class="meta"><span class="route">8 days &middot; 7 nights</span><span class="pr">from <strong>$5,238pp*</strong></span></div>
+      <ul>
+        <li>Hyde Park, Buckingham Palace and the buzz of Covent Garden</li>
+        <li>River cruises and tours in both cities</li>
+        <li>Versailles, Eiffel Tower city views and Monet's gardens</li>
+      </ul>
+      <p class="fine">*Based on double occupancy.</p>
+      <a class="btn btn-gold" href="#">Find out more</a>
+    </div>
+  </div>
+  <div class="cta-row center" style="justify-content:center"><a class="btn btn-ghost" href="#">Explore England vacations</a></div>
+  <div class="strip"><p>These itineraries are just the starting point — <strong>get in touch with our destination experts</strong> for fully customized vacations.</p></div>
+</div>
+${emFoot({h:"Thoughtfully curated, fully customizable",p:"Our England specialists will build the journey around your client.",b:"Talk to a specialist"})}`
+},
+
+c4:{
+subject:"Thailand: the ultimate travel planning guide — pick your session",
+preheader:"Live specialist training with John Gunning. Friday, June 5. Three time slots.",
+notes:`<p><strong>v2:</strong> John Gunning gets a proper speaker card with headshot slot — putting a face on the webinar lifts registration. The Thailand Checklist bonus gets its own cover-thumbnail slot.</p>`,
+html:`${emHead}
+<div class="hero ph art-thaihero">${spec("PHOTO — Long-tail boat in Phang Nga / Krabi limestone karsts, or Wat Arun at sunset","1280×800")}<div class="overlay"></div>${heroFlight}
+  <div class="content">
+    <div class="eyebrow">Specialist Training &middot; Live Webinar</div>
+    <h1>Thailand: The Land of <em>Smiles</em> awaits.</h1>
+    <p>Golden temples, vibrant markets, tropical islands and incredible cuisine. A practical tour of Bangkok, Chiang Mai, Phuket, Koh Samui and beyond — planning tips, advisor selling points and experiences your clients will love.</p>
+    <div class="price">Friday, June 5 &middot; <strong>3 sessions</strong></div>
+  </div>
+</div>
+<div class="body-pad tight">
+  ${greet}
+  <div class="speaker">
+    <div class="hs ph art-neutral">${spec("Headshot","400×400")}</div>
+    <div><h4>John Gunning</h4><p>Sales Manager, Travel Answers Group &middot; your host for all three sessions</p></div>
+  </div>
+  <p class="greet" style="margin-top:20px">From island-hopping and street food to luxury resorts and cultural treasures, Thailand offers something for everyone. Grab a coffee (or a Thai iced tea) and join us. <strong>Register for one session only.</strong></p>
+  <div class="sec-label">Friday, June 5</div>
+  <h2 class="sec-title">Pick the time that suits you</h2>
+  <div class="session"><div><div class="sn">Session One</div><div class="st">6AM PST &middot; 7AM MST &middot; 8AM CST &middot; 9AM EST</div></div><a class="btn btn-gold" href="#">Register</a></div>
+  <div class="session"><div><div class="sn">Session Two</div><div class="st">9AM PST &middot; 10AM MST &middot; 11AM CST &middot; 12PM EST</div></div><a class="btn btn-gold" href="#">Register</a></div>
+  <div class="session"><div><div class="sn">Session Three</div><div class="st">12PM PST &middot; 1PM MST &middot; 2PM CST &middot; 3PM EST</div></div><a class="btn btn-gold" href="#">Register</a></div>
+  <div class="strip"><p><strong>Bonus:</strong> attendees receive the Thailand Checklist 2026 — a practical planning companion for advisor conversations.</p></div>
+  <div class="pkg" style="margin-top:20px"><div class="img ph art-thaihero" style="height:150px">${spec("GRAPHIC — Thailand Checklist 2026 cover thumbnail","1280×300")}</div></div>
+  <div class="sig">The fun truly is in the planning… and Thailand is waiting.<br><strong>The Travel Answers Team</strong></div>
+</div>
+${emFoot({h:"Can't make any session?",p:"Reply to this email and we'll share the recording and checklist.",b:"Request the recording"})}`
+},
+
+nl1:{
+subject:"Travel Answers Insider — June 2026",
+preheader:"Roadshows, new booking tools, VacationPort partnership and introducing TIER.",
+notes:`<p><strong>v2:</strong> the CEO letter returns with Kirk Demeter's headshot (as in the original), and every story now carries a thumbnail slot — a consistent editorial pattern advisors can skim in 30 seconds.</p>`,
+html:`${emHead}
+<div class="hero ph art-newshero">${spec("PHOTO — Editorial montage: globe/map desk flat-lay or destination collage","1280×760")}<div class="overlay"></div>${heroFlight}
+  <div class="content">
+    <div class="eyebrow">Insider Newsletter &middot; June 2026</div>
+    <h1>The inside scoop, for the advisors who <em>drive our success.</em></h1>
+    <p>Roadshows you won't want to miss, long-awaited booking tech, a new VacationPort partnership, and a rewards programme built for you.</p>
+  </div>
+</div>
+<div class="body-pad tight">
+  <div class="letter">
+    <div class="hs ph art-neutral">${spec("Headshot","400×400")}</div>
+    <div>
+      <p class="greet">Dear Advisor Partners — May was Travel Advisor Appreciation Month, but our commitment doesn't stop there. Every day, we put the needs of you and your clients at the forefront of everything we do.</p>
+      <p class="who"><b>Kirk Demeter</b> &middot; CEO / Founder</p>
+    </div>
+  </div>
+  <div class="sec-label">In this edition</div>
+  <div class="toc">
+    <a href="#">Announcements</a><a href="#">2026 Roadshow — Africa, Asia, Antipodes &amp; Europe</a>
+    <a href="#">Specialist Training</a><a href="#">Hot Deals</a>
+    <a href="#">Destination Spotlight</a><a href="#">Featured Tour &amp; Activity Partners</a>
+    <a href="#">On the Road</a><a href="#">Resources Hub</a>
+  </div>
+  <div class="sec-label" style="margin-top:40px">This month's stories</div>
+  <div class="news-item">
+    <div class="thumb ph art-tier">${spec("GRAPHIC — TIER logo lockup / rewards visual","560×390")}</div>
+    <div><div class="k">New &middot; Rewards</div><h3>Introducing TIER — Travel Insider Exclusive Rewards</h3><p>Advisor incentives, taken to the next level. Earn on eligible bookings and put rewards toward your own travel.</p><a href="#">Learn about TIER &rarr;</a></div>
+  </div>
+  <div class="news-item">
+    <div class="thumb ph art-ui">${spec("SCREENSHOT — Advisor Hub UI","560×390")}</div>
+    <div><div class="k">Coming soon &middot; Technology</div><h3>The Online Advisor Hub</h3><p>Booking tools that fit your workflow — quick quotes, live availability and itinerary building, with your Destination Specialists still at the centre.</p><a href="#">Preview the Hub &rarr;</a></div>
+  </div>
+  <div class="news-item">
+    <div class="thumb ph art-neutral">${spec("GRAPHIC — TAG × VacationPort logo lockup","560×390")}</div>
+    <div><div class="k">Partnership</div><h3>Travel Answers &times; VacationPort</h3><p>Advisors now get access to dozens of curated, customizable vacation packages through our new partnership.</p><a href="#">See what's included &rarr;</a></div>
+  </div>
+  <div class="news-item">
+    <div class="thumb ph art-eu">${spec("PHOTO/MAP — Roadshow route map or event city montage","560×390")}</div>
+    <div><div class="k">Events</div><h3>2026 Roadshow: Africa, Asia, Antipodes &amp; Europe</h3><p>We're hitting the road — trust us, you won't want to miss these. Dates and cities announced inside.</p><a href="#">View Roadshow dates &rarr;</a></div>
+  </div>
+  <div class="sig">At Travel Answers, we're always looking for new ways to <strong>Make Travel Easy</strong> — and we're proud to be your partner of choice.<br><strong>The Travel Answers Team</strong></div>
+</div>
+${emFoot({h:"Get Inspired",p:"Hot deals and destination spotlights, refreshed every month for your clients.",b:"Browse this month's deals"})}`
+}
+};
+
+/* ---------- IMAGE SHOT LIST (data drives the production page) ---------- */
+const shotlist = [
+{g:"Shared brand assets", rows:[
+ ["LOGO","TAG logo, white version (supplied SVG) — header, footer","SVG / any"],
+ ["LOGO","TAG logo, navy version for light backgrounds (optional)","SVG / any"],
+]},
+{g:"1.1 — Welcome to Travel Answers", rows:[
+ ["HERO","Signature TAG hero — golden-hour landscape that says 'incredible vacations' (e.g. Milford Sound, Uluru dusk)","1280 × 800"],
+ ["CARD","New Zealand — Milford Sound or Southern Alps","592 × 256"],
+ ["CARD","Australia — Uluru at dusk or Sydney Harbour","592 × 256"],
+ ["CARD","South Pacific — Fiji/Tahiti overwater bungalows, turquoise lagoon","592 × 256"],
+ ["CARD","Africa — safari, elephants or savannah at golden hour","592 × 256"],
+ ["CARD","Asia — temple lanterns or vibrant street-food market","592 × 256"],
+ ["CARD","Europe — old town or coastal village (Lisbon, Amalfi, Santorini)","592 × 256"],
+]},
+{g:"1.2 — Advisor Hub", rows:[
+ ["HERO","Advisor lifestyle — agent with client or at laptop, warm natural light (authentic, not stocky)","1280 × 800"],
+ ["SHOT","Advisor Hub dashboard screenshot, framed in a laptop mockup","1280 × 400"],
+]},
+{g:"1.3 — Booking tools", rows:[
+ ["HERO","Booking platform screenshot — itinerary builder or live availability screen","1280 × 800"],
+ ["SHOT","Branded client proposal output — the prettiest page of a generated proposal","1280 × 400"],
+]},
+{g:"1.4 — TIER rewards", rows:[
+ ["HERO","Aspirational personal travel — traveller at resort/infinity pool (this is the advisor's own trip)","1280 × 860"],
+ ["OPT","TIER logo lockup / badge graphic (also reused in newsletter)","560 × 390"],
+]},
+{g:"South Korea — Winter Magic", rows:[
+ ["HERO","Gyeongbokgung Palace in snow — hanbok figures if possible","1280 × 800"],
+ ["PKG","Yongpyong ski slopes — skier action or chairlift over fresh snow","1280 × 360"],
+ ["PKG","Seoul at night (N Seoul Tower) or Nami Island tree-lined path in winter","1280 × 360"],
+]},
+{g:"Portugal — Saudade", rows:[
+ ["HERO","Alfama, Lisbon at golden hour with Tram 28 — rooftops down to the Tagus","1280 × 800"],
+ ["PKG","Porto — Ribeira waterfront with rabelo boats on the Douro","1280 × 360"],
+ ["PKG","Algarve — Benagil caves or golden cliffs with turquoise water","1280 × 360"],
+ ["PKG","Barcelona — Sagrada Família or Park Güell skyline (Iberian journey)","1280 × 360"],
+]},
+{g:"England, Your Way", rows:[
+ ["HERO","Cotswolds honeyed-stone village lane — Bibury or Castle Combe, soft light","1280 × 800"],
+ ["PKG","Stonehenge at dawn, or Windsor Castle","1280 × 360"],
+ ["PKG","London + Paris — Tower Bridge / Eiffel Tower pairing or dusk skyline","1280 × 360"],
+]},
+{g:"Thailand — Specialist Training", rows:[
+ ["HERO","Long-tail boat among Phang Nga/Krabi limestone karsts, or Wat Arun at sunset","1280 × 800"],
+ ["HEAD","John Gunning headshot — clean background, friendly","400 × 400"],
+ ["GFX","Thailand Checklist 2026 cover thumbnail (banner crop)","1280 × 300"],
+]},
+{g:"Insider Newsletter — June", rows:[
+ ["HERO","Editorial montage — globe/map desk flat-lay or destination collage","1280 × 760"],
+ ["HEAD","Kirk Demeter headshot (CEO/Founder) — existing asset from current newsletter","400 × 400"],
+ ["THUMB","TIER rewards graphic (reuse from 1.4)","560 × 390"],
+ ["THUMB","Advisor Hub UI screenshot (reuse crop from 1.2)","560 × 390"],
+ ["THUMB","TAG × VacationPort logo lockup","560 × 390"],
+ ["THUMB","Roadshow route map or event-city montage","560 × 390"],
+]}
+];
+
+const shotPage = () => `
+<div class="shotlist">
+  <h2>Image shot list</h2>
+  <p class="lead">Every asset needed to take these nine campaigns live, in email-display order. Sizes are the <strong>@2x export dimensions</strong> for a 640px-wide email (retina-sharp in Mailchimp). Keep JPGs under ~200KB each; use the navy overlay in the templates rather than baking darkness into the photo.</p>
+  ${shotlist.map(g=>`
+  <div class="sl-group"><h3>${g.g}</h3>
+    ${g.rows.map(r=>`<div class="sl-row"><span class="slot">${r[0]}</span><span class="desc">${r[1]}</span><span class="dim">${r[2]}</span></div>`).join("")}
+  </div>`).join("")}
+  <div class="sl-tip"><strong>Sourcing notes:</strong> heroes must survive a navy gradient overlay — favour images with sky or open space in the lower third where the headline sits. Tourism boards (Tourism Australia, TNZ, KTO, Visit Portugal, VisitBritain, TAT) supply licensed advisor-marketing imagery free — worth requesting media-library access before buying stock. Screenshots should come from the live booking platform once UI is final; placeholder gradients hold their slots until then.</div>
+</div>`;
+
+/* ---------- router ---------- */
+const root = document.getElementById('page-root');
+const ibS = document.getElementById('ib-subject');
+const ibP = document.getElementById('ib-preheader');
+const notesWrap = document.getElementById('notes-wrap');
+const notes = document.getElementById('design-notes');
+const inboxBar = document.getElementById('inbox-bar');
+const items = document.querySelectorAll('.nav-item');
+function show(id){
+  items.forEach(b=>b.classList.toggle('active', b.dataset.id===id));
+  if(id==='shots'){
+    root.className=''; root.innerHTML = shotPage();
+    inboxBar.classList.add('hide'); notesWrap.classList.add('hide');
+  } else {
+    const c = campaigns[id]; if(!c) return;
+    root.className='email'; root.innerHTML = c.html;
+    ibS.textContent = c.subject; ibP.textContent = c.preheader;
+    notes.innerHTML = c.notes;
+    inboxBar.classList.remove('hide'); notesWrap.classList.remove('hide');
+  }
+  document.querySelector('.main').scrollTo({top:0});
+}
+items.forEach(b=>b.addEventListener('click',()=>show(b.dataset.id)));
+show('n1');
+</script>
+</body>
+</html>
